@@ -40,3 +40,29 @@
 --AS
 --SELECT SUM(Quantity) AS 'Satýlan Toplam Ürün Adedi' FROM SaleDetails
 
+------------------------------------------------------------------------
+-------------------------- NORTHWIND -----------------------------------
+------------------------------------------------------------------------
+
+--
+--SELECT ProductName,[UnitPrice],[UnitsInStock],[Discontinued]  FROM Products WHERE UnitsInStock > 0 OR Discontinued = 0
+
+--
+--SELECT ProductName,UnitPrice,UnitsInStock,UnitPrice*UnitsInStock AS 'Stok Deðeri' FROM Products
+
+--
+--SELECT ProductName,UnitPrice,UnitsInStock,ReorderLevel FROM Products WHERE ReorderLevel > UnitsInStock AND Discontinued = 0
+
+--SELECT COUNT(ProductName) AS 'Ürün Adedi',SUM(UnitPrice*UnitsInStock) AS 'Toplam Stok Deðeri' FROM Products
+
+--SELECT CategoryID, COUNT(ProductName) AS 'Ürün Adedi',SUM(UnitPrice*UnitsInStock) AS 'Toplam Stok Deðeri' FROM Products GROUP BY CategoryID
+
+--SELECT cOUNT(CategoryName),SUBSTRING(Description,1,50) FROM Categories GROUP BY SUBSTRING(Description,1,50)
+
+
+--SELECT  dbo.Categories.CategoryName, SUBSTRING(dbo.Categories.Description, 1, 50) AS [Kategori Açýklamasý], COUNT(dbo.Products.ProductName) AS [ürün adedi], SUM(dbo.Products.UnitsInStock * dbo.Products.UnitPrice) 
+--                         AS [Toplam  stok deðeri]
+--FROM dbo.Products INNER JOIN
+--    dbo.Categories ON dbo.Products.CategoryID = dbo.Categories.CategoryID
+--GROUP BY dbo.Categories.CategoryName, SUBSTRING(dbo.Categories.Description, 1, 50)
+
