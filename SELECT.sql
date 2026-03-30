@@ -66,3 +66,82 @@
 --    dbo.Categories ON dbo.Products.CategoryID = dbo.Categories.CategoryID
 --GROUP BY dbo.Categories.CategoryName, SUBSTRING(dbo.Categories.Description, 1, 50)
 
+
+--SELECT 
+--[OrderID],[ProductID],[UnitPrice],[Quantity],[Discount],
+--[UnitPrice]*[Quantity] AS 'Tutar',
+--[UnitPrice]*[Quantity]*[Discount] AS 'Ýndirim Tutarý',
+--([UnitPrice]*[Quantity])-([UnitPrice]*[Quantity]*[Discount]) AS 'Ýndirimli Tutar'
+--from [Order Details]
+
+--SELECT 
+--FORMAT(SUM([UnitPrice]*[Quantity]),'C','tr-TR') AS 'Toplam Tutar',
+--FORMAT(SUM([UnitPrice]*[Quantity]*[Discount]),'C','tr-TR') AS 'Ýndirimler Toplamý',
+--FORMAT(SUM(([UnitPrice]*[Quantity])-([UnitPrice]*[Quantity]*[Discount])),'C','tr-TR') AS 'Ciro'
+--FROM [Order Details]
+
+--Ürüne göre satýþ raporu
+--SELECT ProductID,
+--FORMAT(SUM([UnitPrice]*[Quantity]),'C','tr-TR') AS 'Toplam Tutar',
+--FORMAT(SUM([UnitPrice]*[Quantity]*[Discount]),'C','tr-TR') AS 'Ýndirimler Toplamý',
+--FORMAT(SUM(([UnitPrice]*[Quantity])-([UnitPrice]*[Quantity]*[Discount])),'C','tr-TR') AS 'Ciro'
+--FROM [Order Details]
+--GROUP BY ProductID
+--ORDER by SUM(([UnitPrice]*[Quantity])-([UnitPrice]*[Quantity]*[Discount])) DESC
+
+-- Sipariþe göre satýþ tutarlarý Raporu
+--ALTER VIEW [Sipariþe göre satýþ tutarlarý Raporu]
+--AS
+--SELECT OrderID,
+--FORMAT(SUM([UnitPrice]*[Quantity]),'C','tr-TR') AS 'Toplam Tutar',
+--FORMAT(SUM([UnitPrice]*[Quantity]*[Discount]),'C','tr-TR') AS 'Ýndirimler Toplamý',
+--FORMAT(SUM(([UnitPrice]*[Quantity])-([UnitPrice]*[Quantity]*[Discount])),'C','tr-TR') AS 'Ciro',
+--SUM(([UnitPrice]*[Quantity])-([UnitPrice]*[Quantity]*[Discount])) AS 'CurCiro'
+--FROM [Order Details]
+--GROUP BY OrderID
+----ORDER by SUM(([UnitPrice]*[Quantity])-([UnitPrice]*[Quantity]*[Discount])) DESC
+
+--SELECT [OrderID],[Toplam Tutar],[Ýndirimler Toplamý],[Ciro] FROM [dbo].[Sipariþe göre satýþ tutarlarý Raporu]
+--order by CurCiro DESC
+
+--SELECT T.[OrderID],T.[Toplam Tutar],T.[Ýndirimler Toplamý],T.[Ciro] FROM 
+--(
+--	SELECT OrderID,
+--FORMAT(SUM([UnitPrice]*[Quantity]),'C','tr-TR') AS 'Toplam Tutar',
+--FORMAT(SUM([UnitPrice]*[Quantity]*[Discount]),'C','tr-TR') AS 'Ýndirimler Toplamý',
+--FORMAT(SUM(([UnitPrice]*[Quantity])-([UnitPrice]*[Quantity]*[Discount])),'C','tr-TR') AS 'Ciro',
+--SUM(([UnitPrice]*[Quantity])-([UnitPrice]*[Quantity]*[Discount])) AS 'CurCiro'
+--FROM [Order Details]
+--GROUP BY OrderID
+--) AS T
+--order by T.CurCiro DESC
+
+
+CREATE PROC [SP_Sipariþe_göre_satýþ_tutarlarý_Raporu]
+AS
+SELECT OrderID,
+FORMAT(SUM([UnitPrice]*[Quantity]),'C','tr-TR') AS 'Toplam Tutar',
+FORMAT(SUM([UnitPrice]*[Quantity]*[Discount]),'C','tr-TR') AS 'Ýndirimler Toplamý',
+FORMAT(SUM(([UnitPrice]*[Quantity])-([UnitPrice]*[Quantity]*[Discount])),'C','tr-TR') AS 'Ciro',
+SUM(([UnitPrice]*[Quantity])-([UnitPrice]*[Quantity]*[Discount])) AS 'CurCiro'
+FROM [Order Details]
+GROUP BY OrderID
+ORDER by SUM(([UnitPrice]*[Quantity])-([UnitPrice]*[Quantity]*[Discount])) DESC
+
+
+EXEC [SP_Sipariþe_göre_satýþ_tutarlarý_Raporu]
+
+
+--CREATE PROC DB_Yarat
+--AS
+--CREATE DATABASE TEST
+
+
+--CREATE PROC DB_Sil
+--AS
+--DROP DATABASE TEST
+
+
+--EXEC DB_Yarat
+
+--EXEC DB_Sil
