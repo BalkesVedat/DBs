@@ -59,25 +59,48 @@ CREATE TABLE Items
 
 --CREATE Database Test
 
-CREATE Table Sales
-(
-	SaleID int IDENTITY(1,1) NOT NULL,
-	CustomerID int,
-	SalesDate smalldatetime,
-	PaymentType int, -- TODO: Create PaymentTypes Table
-	PaymentDueDayCount int
-)
+--CREATE Table Sales
+--(
+--	SaleID int IDENTITY(1,1) NOT NULL,
+--	CustomerID int,
+--	SalesDate smalldatetime,
+--	PaymentType int, -- TODO: Create PaymentTypes Table
+--	PaymentDueDayCount int,
+--  CONSTRAINT PK_Sales PRIMARY KEY CLUSTERED (SaleID ASC)
+--)
 
-CREATE Table SaleDetails
-(
-	SaleDetailID int IDENTITY(1,1) NOT NULL,
-	SaleID int,
+--CREATE Table SaleDetails
+--(
+--	SaleDetailID int IDENTITY(1,1) NOT NULL,
+--	SaleID int,
+--	ProductID int,
+--	Quantity int,
+--	UnitPrice money,
+--	VAT decimal(3,2),
+--	DiscountRate decimal(3,2)
+--)
 
+--CREATE table PaymentTypes
+--(
+--	PaymentTypeID int IDENTITY(1,1) NOT NULL,
+--	PaymentTypeText nvarchar(15)
+--)
 
+--ALTER table PaymentTypes
+--	ADD CONSTRAINT PK_PaymentTypes PRIMARY KEY CLUSTERED (PaymentTypeID ASC)  
 
-)
+--ALTER TABLE Sales
+--	ADD CONSTRAINT PK_Sales PRIMARY KEY CLUSTERED (SaleID ASC)
 
+--ALTER Table SaleDetails
+--	ADD Constraint PK_SaleDetails PRIMARY KEY CLUSTERED (SaleDetailID ASC)
 
+-------------------------------------------------------------------
+---------------------------   DROP   ------------------------------
+-------------------------------------------------------------------
+
+--DROP Table Sales
+--DROP Table SaleDetails
 
 
 -- DROP : VT nesnelerini (Database-Table-View-SP(Proc)-Trigger-Login) silmek için kullanýlýr.
@@ -124,6 +147,27 @@ CREATE Table SaleDetails
 --('XYZ Toptancýsý','Fatma Haným','4444444444',NULL,'fatma@xyz.com')
 
 
+--INSERT INTO PaymentTypes VALUES ('Nakit')
+--INSERT INTO PaymentTypes VALUES ('Çek')
+--INSERT INTO PaymentTypes VALUES ('Senet')
+--INSERT INTO PaymentTypes VALUES ('Kredi Kartý')
+--INSERT INTO PaymentTypes VALUES ('Havale/EFT/FAST')
+--INSERT INTO PaymentTypes VALUES ('Vadeli Açýk Hesap')
 
+--INSERT INTO DailyCurrencyRates (CurrencyID, TLRate) VALUES (2,45)
+--INSERT INTO DailyCurrencyRates VALUES (3,52,GETDATE())
+--INSERT INTO DailyCurrencyRates (CurrencyID, TLRate,CurrencyDate) VALUES (4,61,'2026-06-16 10:46:25')
 
+--UPDATE DailyCurrencyRates SET CurrencyDate = GETDATE() WHERE DailyCurrencyRateID = 4
+
+-------------------------------------------------------
+
+-- DELETE : Tablolardan kayýt siler
+-- DELETE FROM Tablo_adý WHERE kayýt_seçici_filtre_ifadesi
+
+--DELETE FROM PaymentTypes WHERE [PaymentTypeID] = 8
+--DELETE FROM PaymentTypes WHERE [PaymentTypeID] = 9
+
+--ALTER TABLE Categories 
+--	ALTER Column CategoryText nvarchar(30)
 
