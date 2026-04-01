@@ -1,4 +1,4 @@
---SELECT : Veri Tabaný nesnelerini ve tablolardaki kayýtlarý 
+--SELECT : Veri Tabaný nesnelerini ve tablolardaki kayýtlarý
 -- listelemek için kullanýlýr. Kayýtlarý sadece liste olarak alabilir 
 -- ya da istersek üzerinde hesaplamalar yaptýrabiliriz.
 -------------------------------------------------------
@@ -117,19 +117,19 @@
 --order by T.CurCiro DESC
 
 
-CREATE PROC [SP_Sipariþe_göre_satýþ_tutarlarý_Raporu]
-AS
-SELECT OrderID,
-FORMAT(SUM([UnitPrice]*[Quantity]),'C','tr-TR') AS 'Toplam Tutar',
-FORMAT(SUM([UnitPrice]*[Quantity]*[Discount]),'C','tr-TR') AS 'Ýndirimler Toplamý',
-FORMAT(SUM(([UnitPrice]*[Quantity])-([UnitPrice]*[Quantity]*[Discount])),'C','tr-TR') AS 'Ciro',
-SUM(([UnitPrice]*[Quantity])-([UnitPrice]*[Quantity]*[Discount])) AS 'CurCiro'
-FROM [Order Details]
-GROUP BY OrderID
-ORDER by SUM(([UnitPrice]*[Quantity])-([UnitPrice]*[Quantity]*[Discount])) DESC
+--CREATE PROC [SP_Sipariþe_göre_satýþ_tutarlarý_Raporu]
+--AS
+--SELECT OrderID,
+--FORMAT(SUM([UnitPrice]*[Quantity]),'C','tr-TR') AS 'Toplam Tutar',
+--FORMAT(SUM([UnitPrice]*[Quantity]*[Discount]),'C','tr-TR') AS 'Ýndirimler Toplamý',
+--FORMAT(SUM(([UnitPrice]*[Quantity])-([UnitPrice]*[Quantity]*[Discount])),'C','tr-TR') AS 'Ciro',
+--SUM(([UnitPrice]*[Quantity])-([UnitPrice]*[Quantity]*[Discount])) AS 'CurCiro'
+--FROM [Order Details]
+--GROUP BY OrderID
+--ORDER by SUM(([UnitPrice]*[Quantity])-([UnitPrice]*[Quantity]*[Discount])) DESC
 
 
-EXEC [SP_Sipariþe_göre_satýþ_tutarlarý_Raporu]
+--EXEC [SP_Sipariþe_göre_satýþ_tutarlarý_Raporu]
 
 
 --CREATE PROC DB_Yarat
@@ -145,3 +145,69 @@ EXEC [SP_Sipariþe_göre_satýþ_tutarlarý_Raporu]
 --EXEC DB_Yarat
 
 --EXEC DB_Sil
+
+-------------------------------------------------------
+-------------------------------------------------------
+
+
+--SELECT [ProductName],[UnitPrice],[UnitsInStock], Suppliers.CompanyName 
+--FROM Products INNER JOIN Suppliers ON Products.SupplierID = Suppliers.SupplierID
+
+--SELECT [ProductName],[UnitPrice],[UnitsInStock], Suppliers.CompanyNam 
+--FROM Products LEFT OUTER JOIN Suppliers ON Products.SupplierID = Suppliers.SupplierID
+
+--SELECT [ProductName],[UnitPrice],[UnitsInStock], Suppliers.CompanyName
+--, Suppliers.SupplierID
+--FROM Products FULL JOIN Suppliers ON Products.SupplierID = Suppliers.SupplierID
+--WHERE Suppliers.SupplierID IS NULL OR Products.ProductID is null
+
+
+--SELECT 
+--* 
+--FROM Products P FULL JOIN [Order Details] OD
+--ON OD.ProductID = P.ProductID
+--WHERE OD.OrderID is NULL
+
+--SELECT * FROM Customers AS C LEFT JOIN Orders AS O ON C.CustomerID = O.CustomerID
+--WHERE O.OrderID IS NULL --AND O.OrderDate > '1996-12-31'
+
+
+--SELECT Products.CategoryID, [ProductName],[UnitPrice],[UnitsInStock],[CategoryName],Description 
+--FROM [dbo].[Products] INNER JOIN [dbo].[Categories] ON Products.CategoryID = Categories.CategoryID
+
+
+SELECT * FROM PRODUCTS
+
+
+
+/*
+---------------------------------------------------------
+---------------------------------------------------------
+-- START POINT OF CODE ----------------------------------
+
+--CREATE PROC [SP Musteriye Gore Satis Detaylari]
+--AS
+--SELECT RANK() OVER(ORDER BY OD.OrderID) AS 'Sýra',
+--C.CompanyName AS 'Müþteri', c.Country, O.OrderID, 
+--FORMAT(O.OrderDate,'dd.MM.yyyy','tr-TR') AS 'Sipariþ Tarihi',
+--FORMAT(O.ShippedDate,'dd.MM.yyyy','tr-TR') AS 'Nakliye Tarihi',
+--P.ProductName, OD.UnitPrice, OD.Quantity, 
+--FORMAT(OD.UnitPrice * OD.Quantity,'N0','tr-TR') AS 'Tutar'
+--FROM Customers AS C
+--JOIN Orders AS O ON C.CustomerID = O.CustomerID
+--JOIN [Order Details] AS OD ON O.OrderID = OD.OrderID
+--JOIN Products AS P ON OD.ProductID = P.ProductID
+----WHERE (OD.UnitPrice * OD.Quantity) = 1000
+
+--UNION
+
+--SELECT 999999,'','','','','','','','',
+-- FORMAT(SUM(ODT.UnitPrice * ODT.Quantity),'N0','tr-TR') AS 'TOPLAM' 
+-- FROM [Order Details] AS ODT
+
+-- END POINT OF CODE ------------------------------------
+---------------------------------------------------------
+---------------------------------------------------------
+
+*/
+
